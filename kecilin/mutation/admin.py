@@ -8,9 +8,11 @@ from .models import *
 class UangMasukAdmin(admin.ModelAdmin):
     list_display = ["user_id", "datetime", "nominal"]
     fields = ('user_id', 'datetime', 'nominal')
+    list_per_page = 10
 
 
 @admin.register(Uang_keluar)
 class UangMasukAdmin(admin.ModelAdmin):
     list_display = ["user_id", "datetime", "nominal"]
     fields = ('user_id', 'datetime', 'nominal')
+    list_per_page = 10
