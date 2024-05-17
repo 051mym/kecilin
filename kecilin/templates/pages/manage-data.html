@@ -1,4 +1,12 @@
-{% extends "base.html" %} {% load static %} {% block content %}
+{% extends "base.html" %} {% load static %} {% load template_kecilin %} {% block content %}
+<div class="card col-span-12 w-full bg-base-200 rounded-lg shadow-lg">
+  <div class="card-body">
+    <h2 class="card-title">Manajemen {{ request.path|title_last_url }}</h2>
+    <div class="card-actions justify-end">
+      <button class="btn btn-primary">Tambah</button>
+    </div>
+  </div>
+</div>
 <div class="card col-span-12 bg-base-200 rounded-lg shadow-lg">
   <div class="card-body p-5 w-auto h-full">
     <div class="overflow-y-auto">
