@@ -17,13 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
-from .views import home
+from mutation import views
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', home, name='home'),
-    path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
-    path('mutation/', include('mutation.urls')),
+    path('uang-masuk', views.uang_masuk, name='uang-masuk'),
+    path('uang-keluar', views.uang_keluar, name='uang-keluar'),
 ]
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

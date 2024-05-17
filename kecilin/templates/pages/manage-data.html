@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% block content %}
+<div class="card col-span-12 bg-base-200 rounded-lg shadow-lg">
+  <div class="card-body p-5 w-auto h-full">
+    <div class="overflow-y-auto">
+      {{page.num_pages}}
+      <table class="table table-zebra bg-base-100">
+        <thead>
+          <tr>
+            <td class="text-primary text-sm font-semibold" >Username</td>
+            <td class="text-primary text-sm font-semibold" >Nominal (Rp)</td>
+            <td class="text-primary text-sm font-semibold" >Tanggal</td>
+            <td class="text-primary text-sm font-semibold" >Aksi</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in datatable %}
+          <tr class="hover">
+            <td>{{data.user_id.username | title}}</td>
+            <td>{{data.nominal}}</td>
+            <td>{{data.datetime|date:"d M Y"}}</td>
+            <td class="">
+              <button class="btn btn-sm btn-info tooltip" data-tip="Lihat">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+              <button class="btn btn-sm btn-warning tooltip" data-tip="Edit">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <button class="btn btn-sm btn-error tooltip" data-tip="Hapus">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="grid justify-items-end w-full">
+        <div class="join">
+          {% if datatable.has_previous %}
+          <a href="?page=1" class="join-item btn btn-sm btn-outline"><<</a>
+          <a href="?page={{ datatable.previous_page_number }}" class="join-item btn btn-sm btn-outline"><</a>
+          {% endif %}
+          <a class="join-item btn btn-sm btn-outline btn-active">Page {{ datatable.number }} of {{ datatable.paginator.num_pages }}</a>
+          {% if datatable.has_next %}
+          <a href="?page={{ datatable.next_page_number }}" class="join-item btn btn-sm btn-outline">></a>
+          <a href="?page={{ datatable.paginator.num_pages }}" class="join-item btn btn-sm btn-outline">>></a>
+          {% endif %}
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
