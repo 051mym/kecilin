@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% load static %} {% block content %}
 <div class="card col-span-12 bg-base-200 rounded-lg shadow-lg">
   <div class="card-body p-5 w-auto h-full">
     <div class="overflow-y-auto">
@@ -25,7 +25,7 @@
               <button class="btn btn-sm btn-warning tooltip" data-tip="Edit">
                 <i class="fa-solid fa-pen-to-square"></i>
               </button>
-              <button class="btn btn-sm btn-error tooltip" data-tip="Hapus">
+              <button class="btn btn-sm btn-error tooltip button_delete" onclick="showModalDelete('{{data.id}}','{{data.user_id.username}}')" data-tip="Hapus">
                 <i class="fa-solid fa-trash"></i>
               </button>
             </td>
@@ -44,10 +44,24 @@
           <a href="?page={{ datatable.next_page_number }}" class="join-item btn btn-sm btn-outline">></a>
           <a href="?page={{ datatable.paginator.num_pages }}" class="join-item btn btn-sm btn-outline">>></a>
           {% endif %}
-          
         </div>
       </div>
     </div>
   </div>
 </div>
+<!-- Open the modal using ID.showModal() method -->
+<dialog id="modal_delete" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Konfirmasi Hapus</h3>
+    <p class="py-4">Apakah kamu yakin akan menghapus data?</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Tidak</button>
+        <a id="modal_button_delete" href="{% url 'uang-mutasi-delete' type_mutation=type_mutation id=0 %}" class="btn btn-error">Ya</a>
+      </form>
+    </div>
+  </div>
+</dialog>
+<script type="text/javascript" src="{% static 'js/manage-data.js' %}"></script>
 {% endblock %}

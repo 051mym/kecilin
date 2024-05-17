@@ -21,6 +21,6 @@ from mutation import views
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('uang-masuk', views.uang_masuk, name='uang-masuk'),
-    path('uang-keluar', views.uang_keluar, name='uang-keluar'),
+    path('uang-<slug:type_mutation>', views.uang_mutasi, name='uang-mutasi'),
+    path('uang-<slug:type_mutation>/delete/<int:id>', views.uang_mutasi_delete, name='uang-mutasi-delete'),
 ]

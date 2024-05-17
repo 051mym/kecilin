@@ -1,13 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from mutation.models import Uang_masuk, Uang_keluar
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 
 
-def uang_masuk(request):
-    uang_masuk = Uang_masuk.objects.all()
-    paginator  = Paginator(uang_masuk, 10)
+def uang_mutasi(request, type_mutation):
+    
+    if type_mutation == 'masuk':
+        data = Uang_masuk.objects.all()
+    elif type_mutation == 'keluar':
+        data = Uang_keluar.objects.all()
+    
+    paginator  = Paginator(data, 10)
     
     page = request.GET.get('page')
     try:
@@ -23,16 +28,20 @@ def uang_masuk(request):
 
 
     return render(request, 'pages/manage-data.html', {
-        'uang_masuk': uang_masuk,
-        'datatable': datatable
+        'datatable': datatable,
+        'type_mutation': type_mutation
     })
 
 
-def uang_keluar(request):
-    uang_keluar = Uang_keluar.objects.all()
-    page = Paginator(uang_keluar, 10)
+def uang_mutasi_delete(request, type_mutation, id):
     
-    return render(request, 'pages/manage-data.html', {
-        'uang_keluar': uang_keluar,
-        'page': page
-    })
+    if type_mutation == 'masuk':
+        data = get_object_or_404(Uang_masuk, pk=id)
+        data.delete()
+    elif type_mutation == 'keluar':
+        data = get_object_or_404(Uang_keluar, pk=id)
+        data.delete()
+        
+    return redirect('uang-mutasi', type_mutation=type_mutation)
+    
+    
