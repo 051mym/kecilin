@@ -1,5 +1,6 @@
 Note Untuk Menjalankan
 
+cd kecilin
 python -m venv venv
 .\venv\Scripts\activate
 cd kecilin
