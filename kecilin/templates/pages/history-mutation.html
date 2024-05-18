@@ -1,7 +1,7 @@
-{% extends "base.html" %} {% load static %} {% load template_kecilin %} {% block content %}
+{% extends "base.html" %} {% load static %} {% load humanize %} {% load template_kecilin %} {% block content %}
 <div class="card col-span-12 w-full bg-base-200 rounded-lg shadow-lg">
   <div class="card-body">
-    <h2 class="card-title">Manajemen {{ request.path|title_last_url }}</h2>
+    <h2 class="card-title">Manajemen {{ request.path|title_last_url }} Bulan Ini</h2>
   </div>
 </div>
 <div class="card col-span-12 bg-base-200 rounded-lg shadow-lg">
@@ -11,18 +11,18 @@
         <thead>
           <tr>
             <td class="text-primary text-sm font-semibold">Tanggal</td>
-            <td class="text-primary text-sm font-semibold">Uang Masuk</td>
-            <td class="text-primary text-sm font-semibold">Uang Keluar</td>
-            <td class="text-primary text-sm font-semibold">Saldo</td>
+            <td class="text-primary text-sm font-semibold">Uang Masuk (Rp)</td>
+            <td class="text-primary text-sm font-semibold">Uang Keluar(Rp)</td>
+            <td class="text-primary text-sm font-semibold">Saldo(Rp)</td>
           </tr>
         </thead>
         <tbody>
           {% for data in datatable %}
           <tr class="hover">
             <td>{{data.date}}</td>
-            <td>{{data.uang_masuk}}</td>
-            <td>{{data.uang_keluar}}</td>
-            <td>{{data.saldo}}</td>
+            <td>{{data.uang_masuk|intcomma}}</td>
+            <td>{{data.uang_keluar|intcomma}}</td>
+            <td>{{data.saldo|intcomma}}</td>
           </tr>
           {% endfor %}
         </tbody>

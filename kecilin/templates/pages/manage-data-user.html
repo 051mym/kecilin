@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% load static %} {% load template_kecilin %} {% block content %}
+{% extends "base.html" %} {% load static %} {% load humanize %} {% load template_kecilin %} {% block content %}
 <div class="card col-span-12 w-full bg-base-200 rounded-lg shadow-lg">
   <div class="card-body">
     <h2 class="card-title">Manajemen {{ request.path|title_last_url }}</h2>
@@ -78,6 +78,7 @@
     </form>
     <h3 class="font-bold text-lg">Data</h3>
     <div class="text-center items-center">
+      <input type="hidden" name="" class="input input-bordered w-full max-w-xs">
       <form id="modal_form_submit" action="{% url 'user-form-id' id=0 %}" method="post">
         {% csrf_token %}
         {{form.id}}
