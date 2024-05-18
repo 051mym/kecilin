@@ -3,34 +3,31 @@
   <div class="card-body">
     <h2 class="card-title">Manajemen {{ request.path|title_last_url }}</h2>
     <div class="card-actions justify-end">
-      <button class="btn btn-primary button_add">Tambah <i class="fa-solid fa-circle-plus"></i></button>
+      <button class="btn btn-success button_add">Tambah <i class="fa-solid fa-circle-plus"></i></button>
     </div>
   </div>
 </div>
 <div class="card col-span-12 bg-base-200 rounded-lg shadow-lg">
   <div class="card-body p-5 w-auto h-full">
     <div class="overflow-y-auto">
-      {{page.num_pages}}
       <table class="table table-zebra bg-base-100">
         <thead>
           <tr>
-            <td class="text-primary text-sm font-semibold" >Username</td>
-            <td class="text-primary text-sm font-semibold" >Nominal (Rp)</td>
-            <td class="text-primary text-sm font-semibold" >Tanggal</td>
-            <td class="text-primary text-sm font-semibold" >Aksi</td>
+            <td class="text-primary text-sm font-semibold">Username</td>
+            <td class="text-primary text-sm font-semibold">Email</td>
+            <td class="text-primary text-sm font-semibold">Aksi</td>
           </tr>
         </thead>
         <tbody>
           {% for data in datatable %}
           <tr class="hover">
-            <td>{{data.user_id.username | title}}</td>
-            <td>{{data.nominal}}</td>
-            <td>{{data.datetime|date:"d M Y"}}</td>
+            <td>{{data.username | title}}</td>
+            <td>{{data.email}}</td>
             <td class="">
               <!-- <button class="btn btn-sm btn-info tooltip button_show" data-tip="Lihat" data-id="{{data.id}}">
                 <i class="fa-solid fa-eye"></i>
               </button> -->
-              <button class="btn btn-sm btn-warning tooltip button_edit" data-tip="Edit" data-id="{{data.id}}" data-object="{{data|serizmutasi}}">
+              <button class="btn btn-sm btn-warning tooltip button_edit" data-tip="Edit" data-id="{{data.id}}" data-object="{{data|serizuser}}">
                 <i class="fa-solid fa-pen-to-square"></i>
               </button>
               <button class="btn btn-sm btn-error tooltip button_delete" data-tip="Hapus" data-id="{{data.id}}">
@@ -81,35 +78,20 @@
     </form>
     <h3 class="font-bold text-lg">Data</h3>
     <div class="text-center items-center">
-      <form id="modal_form_submit" action="{% url 'user-form' %}" method="post">
+      <form id="modal_form_submit" action="{% url 'user-form-id' id=0 %}" method="post">
         {% csrf_token %}
         {{form.id}}
         <label class="form-control w-full max-w-xs">
           <div class="label">
-            <span class="label-text">{{form.user_id.label}}</span>
+            <span class="label-text">{{form.username.label}}</span>
           </div>
-          {{form.user_id}}
-          {% comment %} <div class="label">
-            <span class="label-text-alt">Alt label</span>
-          </div> {% endcomment %}
+          {{form.username}}
         </label>
         <label class="form-control w-full max-w-xs">
           <div class="label">
-            <span class="label-text">{{form.nominal.label}}</span>
+            <span class="label-text">{{form.email.label}}</span>
           </div>
-            {{form.nominal}}
-          {% comment %} <div class="label">
-            <span class="label-text-alt">Bottom Left label</span>
-          </div> {% endcomment %}
-        </label>
-        <label class="form-control w-full max-w-xs">
-          <div class="label">
-            <span class="label-text">{{form.datetime.label}}</span>
-          </div>
-            {{form.datetime}}
-          {% comment %} <div class="label">
-            <span class="label-text-alt">Bottom Left label</span>
-          </div> {% endcomment %}
+          {{form.email}}
         </label>
       <div class="modal-action">
         <button type="submit" class="btn btn-success">Simpan</button>

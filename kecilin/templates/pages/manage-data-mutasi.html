@@ -3,14 +3,13 @@
   <div class="card-body">
     <h2 class="card-title">Manajemen {{ request.path|title_last_url }}</h2>
     <div class="card-actions justify-end">
-      <button class="btn btn-primary button_add">Tambah <i class="fa-solid fa-circle-plus"></i></button>
+      <button class="btn btn-success button_add">Tambah <i class="fa-solid fa-circle-plus"></i></button>
     </div>
   </div>
 </div>
 <div class="card col-span-12 bg-base-200 rounded-lg shadow-lg">
   <div class="card-body p-5 w-auto h-full">
     <div class="overflow-y-auto">
-      {{page.num_pages}}
       <table class="table table-zebra bg-base-100">
         <thead>
           <tr>
@@ -89,27 +88,18 @@
             <span class="label-text">{{form.user_id.label}}</span>
           </div>
           {{form.user_id}}
-          {% comment %} <div class="label">
-            <span class="label-text-alt">Alt label</span>
-          </div> {% endcomment %}
         </label>
         <label class="form-control w-full max-w-xs">
           <div class="label">
             <span class="label-text">{{form.nominal.label}}</span>
           </div>
             {{form.nominal}}
-          {% comment %} <div class="label">
-            <span class="label-text-alt">Bottom Left label</span>
-          </div> {% endcomment %}
         </label>
         <label class="form-control w-full max-w-xs">
           <div class="label">
             <span class="label-text">{{form.datetime.label}}</span>
           </div>
             {{form.datetime}}
-          {% comment %} <div class="label">
-            <span class="label-text-alt">Bottom Left label</span>
-          </div> {% endcomment %}
         </label>
       <div class="modal-action">
         <button type="submit" class="btn btn-success">Simpan</button>

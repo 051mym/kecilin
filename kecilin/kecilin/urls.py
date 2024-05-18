@@ -17,14 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
-from .views import home, user
+from .views import user, user_delete, user_form
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('', user, name='home'),
     path('user', user, name='user-list'),
-    path('user/delete/<int:id>', user, name='user-delete'),
-    path('user/form', user, name='user-form'),
+    path('user/delete/<int:id>', user_delete, name='user-delete'),
+    path('user/form', user_form, name='user-form'),
+    path('user/form/<int:id>', user_form, name='user-form-id'),
 
     
     path('admin/', admin.site.urls),

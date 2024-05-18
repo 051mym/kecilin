@@ -43,7 +43,6 @@ def uang_mutasi(request, type_mutation):
         'datatable': datatable,
         'type_mutation': type_mutation,
         'form' : form,
-        'serializer': MutasiSerializer,
     })
 
 

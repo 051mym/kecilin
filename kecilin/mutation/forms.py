@@ -1,5 +1,4 @@
 from django import forms
-from .models import Uang_keluar, Uang_masuk
 from django.contrib.auth.models import User
 from django.utils import timezone
 
