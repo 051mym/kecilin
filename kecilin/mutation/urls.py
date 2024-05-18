@@ -23,4 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('uang-<slug:type_mutation>', views.uang_mutasi, name='uang-mutasi'),
     path('uang-<slug:type_mutation>/delete/<int:id>', views.uang_mutasi_delete, name='uang-mutasi-delete'),
+    path('uang-<slug:type_mutation>/form', views.uang_mutasi_form, name='uang-mutasi-form'),
+    # path('uang-<slug:type_mutation>/form/<int:id>', views.uang_mutasi_form, name='uang-mutasi-from'),
+    
 ]

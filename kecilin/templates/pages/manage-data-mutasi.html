@@ -1,0 +1,122 @@
+{% extends "base.html" %} {% load static %} {% load template_kecilin %} {% block content %}
+<div class="card col-span-12 w-full bg-base-200 rounded-lg shadow-lg">
+  <div class="card-body">
+    <h2 class="card-title">Manajemen {{ request.path|title_last_url }}</h2>
+    <div class="card-actions justify-end">
+      <button class="btn btn-primary button_add">Tambah <i class="fa-solid fa-circle-plus"></i></button>
+    </div>
+  </div>
+</div>
+<div class="card col-span-12 bg-base-200 rounded-lg shadow-lg">
+  <div class="card-body p-5 w-auto h-full">
+    <div class="overflow-y-auto">
+      {{page.num_pages}}
+      <table class="table table-zebra bg-base-100">
+        <thead>
+          <tr>
+            <td class="text-primary text-sm font-semibold" >Username</td>
+            <td class="text-primary text-sm font-semibold" >Nominal (Rp)</td>
+            <td class="text-primary text-sm font-semibold" >Tanggal</td>
+            <td class="text-primary text-sm font-semibold" >Aksi</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in datatable %}
+          <tr class="hover">
+            <td>{{data.user_id.username | title}}</td>
+            <td>{{data.nominal}}</td>
+            <td>{{data.datetime|date:"d M Y"}}</td>
+            <td class="">
+              <!-- <button class="btn btn-sm btn-info tooltip button_show" data-tip="Lihat" data-id="{{data.id}}">
+                <i class="fa-solid fa-eye"></i>
+              </button> -->
+              <button class="btn btn-sm btn-warning tooltip button_edit" data-tip="Edit" data-id="{{data.id}}" data-object="{{data|serizmutasi}}">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <button class="btn btn-sm btn-error tooltip button_delete" data-tip="Hapus" data-id="{{data.id}}">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="grid justify-items-end w-full">
+        <div class="join">
+          {% if datatable.has_previous %}
+          <a href="?page=1" class="join-item btn btn-sm btn-outline"><<</a>
+          <a href="?page={{ datatable.previous_page_number }}" class="join-item btn btn-sm btn-outline"><</a>
+          {% endif %}
+          <a class="join-item btn btn-sm btn-outline btn-active">Page {{ datatable.number }} of {{ datatable.paginator.num_pages }}</a>
+          {% if datatable.has_next %}
+          <a href="?page={{ datatable.next_page_number }}" class="join-item btn btn-sm btn-outline">></a>
+          <a href="?page={{ datatable.paginator.num_pages }}" class="join-item btn btn-sm btn-outline">>></a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Open the modal using ID.showModal() method -->
+<dialog id="modal_delete" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Konfirmasi Hapus</h3>
+    <p class="py-4">Apakah kamu yakin akan menghapus data?</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Tidak</button>
+      </form>
+      <form id="modal_form_delete" action="{% url 'uang-mutasi-delete' type_mutation=type_mutation id=0 %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-error">Ya</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+<dialog id="modal_form" class="modal">
+  <div class="modal-box w-1/2 max-w-5xl">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <h3 class="font-bold text-lg">Data</h3>
+    <div class="text-center items-center">
+      <form id="modal_form_submit" action="{% url 'uang-mutasi-form' type_mutation=type_mutation %}" method="post">
+        {% csrf_token %}
+        {{form.id}}
+        <label class="form-control w-full max-w-xs">
+          <div class="label">
+            <span class="label-text">{{form.user_id.label}}</span>
+          </div>
+          {{form.user_id}}
+          {% comment %} <div class="label">
+            <span class="label-text-alt">Alt label</span>
+          </div> {% endcomment %}
+        </label>
+        <label class="form-control w-full max-w-xs">
+          <div class="label">
+            <span class="label-text">{{form.nominal.label}}</span>
+          </div>
+            {{form.nominal}}
+          {% comment %} <div class="label">
+            <span class="label-text-alt">Bottom Left label</span>
+          </div> {% endcomment %}
+        </label>
+        <label class="form-control w-full max-w-xs">
+          <div class="label">
+            <span class="label-text">{{form.datetime.label}}</span>
+          </div>
+            {{form.datetime}}
+          {% comment %} <div class="label">
+            <span class="label-text-alt">Bottom Left label</span>
+          </div> {% endcomment %}
+        </label>
+      <div class="modal-action">
+        <button type="submit" class="btn btn-success">Simpan</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</dialog>
+<script type="text/javascript" src="{% static 'js/manage-data-mutasi.js' %}"></script>
+{% endblock %}

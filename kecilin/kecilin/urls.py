@@ -17,13 +17,19 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
-from .views import home
+from .views import home, user
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', home, name='home'),
+    path('', user, name='home'),
+    path('user', user, name='user-list'),
+    path('user/delete/<int:id>', user, name='user-delete'),
+    path('user/form', user, name='user-form'),
+
+    
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     path('mutation/', include('mutation.urls')),
+    
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
