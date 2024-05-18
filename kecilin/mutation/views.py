@@ -3,6 +3,7 @@ from mutation.models import Uang_masuk, Uang_keluar
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import UangMutationForm
 from .serializers import MutasiSerializer
+import requests
 
 # Create your views here.
 
@@ -86,5 +87,18 @@ def uang_mutasi_form(request, type_mutation, id = None):
     return redirect('uang-mutasi', type_mutation=type_mutation)
      
 
+def mutasi_history(request):
+    api_url = 'http://127.0.0.1:8000/api/mutation-list'
+    try:
+        response = requests.get(api_url)
+        response.raise_for_status()
+        data = response.json()
+    except requests.exceptions.RequestException as e:
+        print(f'Error fetching data: {e}')
+        data = []
     
-    
+    datatable = create_page(request.GET.get('page'), data['result'])
+
+    return render(request, 'pages/history-mutation.html', {
+        'datatable':datatable,
+    })

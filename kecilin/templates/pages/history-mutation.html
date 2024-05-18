@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% load static %} {% load template_kecilin %} {% block content %}
+<div class="card col-span-12 w-full bg-base-200 rounded-lg shadow-lg">
+  <div class="card-body">
+    <h2 class="card-title">Manajemen {{ request.path|title_last_url }}</h2>
+  </div>
+</div>
+<div class="card col-span-12 bg-base-200 rounded-lg shadow-lg">
+  <div class="card-body p-5 w-auto h-full">
+    <div class="overflow-y-auto">
+      <table class="table table-zebra bg-base-100">
+        <thead>
+          <tr>
+            <td class="text-primary text-sm font-semibold">Tanggal</td>
+            <td class="text-primary text-sm font-semibold">Uang Masuk</td>
+            <td class="text-primary text-sm font-semibold">Uang Keluar</td>
+            <td class="text-primary text-sm font-semibold">Saldo</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in datatable %}
+          <tr class="hover">
+            <td>{{data.date}}</td>
+            <td>{{data.uang_masuk}}</td>
+            <td>{{data.uang_keluar}}</td>
+            <td>{{data.saldo}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="grid justify-items-end w-full">
+        <div class="join">
+          {% if datatable.has_previous %}
+          <a href="?page=1" class="join-item btn btn-sm btn-outline"><<</a>
+          <a href="?page={{ datatable.previous_page_number }}" class="join-item btn btn-sm btn-outline"><</a>
+          {% endif %}
+          <a class="join-item btn btn-sm btn-outline btn-active">Page {{ datatable.number }} of {{ datatable.paginator.num_pages }}</a>
+          {% if datatable.has_next %}
+          <a href="?page={{ datatable.next_page_number }}" class="join-item btn btn-sm btn-outline">></a>
+          <a href="?page={{ datatable.paginator.num_pages }}" class="join-item btn btn-sm btn-outline">>></a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -17,13 +17,7 @@ class MutationList(APIView):
         start_date = request.GET.get(
             'start_date', timezone.now().replace(day=1))
         end_date = request.GET.get('end_date', timezone.now())
-        user_id = request.GET.get("user_id", None)
-
-        if not user_id:
-            return Response({
-                'status': status.HTTP_400_BAD_REQUEST,
-                'message': "User Id Required"
-            })
+        # user_id = request.GET.get("user_id", None)
 
         result = []
 
@@ -31,15 +25,15 @@ class MutationList(APIView):
         while current_date <= end_date:
             date_formated = current_date.strftime("%Y-%m-%d")
 
-            total_uang_masuk = Uang_masuk.objects.filter(user_id=user_id, datetime__date__lte=date_formated).aggregate(
+            total_uang_masuk = Uang_masuk.objects.filter(datetime__date__lte=date_formated).aggregate(
                 total=Sum('nominal', default=0))['total']
-            total_uang_keluar = Uang_keluar.objects.filter(user_id=user_id, datetime__date__lte=date_formated).aggregate(
+            total_uang_keluar = Uang_keluar.objects.filter(datetime__date__lte=date_formated).aggregate(
                 total=Sum('nominal', default=0))['total']
 
             result.append({
                 'date': date_formated,
-                'uang_masuk': Uang_masuk.objects.filter(user_id=user_id, datetime__date=date_formated).aggregate(total=Sum("nominal", default=0))['total'],
-                'uang_keluar': Uang_keluar.objects.filter(user_id=user_id, datetime__date=date_formated).aggregate(total=Sum("nominal", default=0))['total'],
+                'uang_masuk': Uang_masuk.objects.filter(datetime__date=date_formated).aggregate(total=Sum("nominal", default=0))['total'],
+                'uang_keluar': Uang_keluar.objects.filter(datetime__date=date_formated).aggregate(total=Sum("nominal", default=0))['total'],
                 'saldo': total_uang_masuk - total_uang_keluar,
             })
             current_date += timedelta(days=1)
