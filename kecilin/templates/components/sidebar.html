@@ -20,20 +20,20 @@
       </a>
     </li>
     <li>
-      <details>
+      <details {% if 'user' in request.path %} open {% endif %}>
         <summary>Manajemen Akun</summary>
         <ul>
-          <li><a href="{% url 'user-list' %}">User</a></li>
+          <li><a class="{% if 'user-list' in request.path %} active {% endif %}" href="{% url 'user-list' %}">User</a></li>
         </ul>
       </details>
     </li>
     <li>
-      <details>
+      <details {% if 'mutation' in request.path %} open {% endif %}>
         <summary>Mutasi</summary>
         <ul>
-          <li><a href="{% url 'mutasi-history' %}">Mutasi Histori</a></li>
-          <li><a href="{% url 'uang-mutasi' type_mutation='masuk' %}">Uang Masuk</a></li>
-          <li><a href="{% url 'uang-mutasi' type_mutation='keluar' %}">Uang Keluar</a></li>
+          <li><a class="{% if 'history' in request.path %} active {% endif %}" href="{% url 'mutasi-history' %}">Mutasi Histori</a></li>
+          <li><a class="{% if 'uang-masuk' in request.path %} active {% endif %}" href="{% url 'uang-mutasi' type_mutation='masuk' %}">Uang Masuk</a></li>
+          <li><a class="{% if 'uang-keluar' in request.path %} active {% endif %}" href="{% url 'uang-mutasi' type_mutation='keluar' %}">Uang Keluar</a></li>
         </ul>
       </details>
     </li>
